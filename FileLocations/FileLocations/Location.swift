@@ -26,12 +26,7 @@
 #if os(iOS) || os(tvOS)
 import Foundation
 
-//TODO: TODO List>>>
-//iCloud Support
-//Regular Expression Fetch Support
 internal let manager = FileManager.default
-
-
 
 public class Location {
     //Location.init(fileURL:)
