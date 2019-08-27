@@ -58,6 +58,11 @@ oneLocation.link(toDir:renamed:)
 
 ## More Attributes and Methods are shown in the project.
 
+## Language
+Swift 5.0
+  
+## Available
+iOS 8.0+
 
 
 
