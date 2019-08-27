@@ -5,7 +5,7 @@ A framework to manage iOS files better.
 You can visit one file location begin with a Constant then append subscript component.
 
 ```swift
-Location.userDocument["DirA"]["FileA"].removed
+Location.userDocument["DirA"]["FileA"].removed()
 Location.userDocument["DirB/FileB"].renamed("FileC")
 ```
 
