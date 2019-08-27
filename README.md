@@ -10,7 +10,7 @@ Location.userDocument["DirB/FileB"].renamed("FileC")
 ```
 
 ## Installation
-- Drag the **FileLocations.xcodeproj** file to your project, and embed the EasyAlert.framework.
+- Drag the **FileLocations.xcodeproj** file to your project, and embed the FileLocations.framework.
 
 ## Location Constants
 ```swift
