@@ -28,19 +28,19 @@ Location.temporary
 ```swift
 let data = Location.userDocument["DataFile"].data()
 Location.userDocument["DataFile2"].save(data: data)
-Location.userDocument["Dir"].write(data: data, ifFile: "DataFile3")
+Location.userDocument["Dir"].write(data: data, inFile: "DataFile3")
 
 let stirng = Location.userDocument["TextFile"].string(.utf8)
 Location.userDocument["TextFile2"].save(string: string)
-Location.userDocument["Dir"].write(string: string, ifFile: "TextFile3")
+Location.userDocument["Dir"].write(string: string, inFile: "TextFile3")
 
 let dict = Location.userDocument["DictFile"].dictionary()
 Location.userDocument["DictFile2"].save(dictionary: dictionary)
-Location.userDocument["Dir"].write(dictionary: dictionary, ifFile: "DictFile3")
+Location.userDocument["Dir"].write(dictionary: dictionary, inFile: "DictFile3")
 
 let obj = Location.userDocument["ObjectFile"].unarchived()
 Location.userDocument["ObjectFile2"].archived(object: obj)
-Location.userDocument["Dir"].archive(object: obj, ifFile: "ObjectFile3")
+Location.userDocument["Dir"].archive(object: obj, inFile: "ObjectFile3")
 ```
 
 ## Locations` Manipulations
