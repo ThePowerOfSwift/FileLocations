@@ -24,6 +24,36 @@ Location.home
 Location.temporary
 ```
 
+## Location init
+```swift
+Location.init(fileURL:)
+Location.init(filePath:)
+Location.init(directory:domain:)
+Location.init(filePathComponents:)
+Location.init(url:)
+Location.init?(iCloudContainer:)
+```
+
+## Basic Properties
+```swift
+oneLocation.path
+oneLocation.url
+oneLocation.iCloud
+oneLocation.isExist
+oneLocation.isDir
+oneLocation.isFile
+oneLocation.isReadable
+oneLocation.isWritable
+oneLocation.isDeletable
+oneLocation.isExecutable
+oneLocation.isSymbLink
+oneLocation.symbLinkDestination
+oneLocation.displayName
+oneLocation.extension
+oneLocation.lastComponent
+```
+
+
 ## Location with Read & Write
 ```swift
 let data = Location.userDocument["DataFile"].data()
