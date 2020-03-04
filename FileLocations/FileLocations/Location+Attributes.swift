@@ -139,7 +139,7 @@ extension Location {
         try setAttribute(.posixPermissions, value: permissions)
     }
     
-    //Get&Set whether the file’s extension is hidden.
+    /// Returns whether the file’s extension is hidden.
     public var isExtensionHidden: Bool? {
         return attributes[.extensionHidden] as? Bool
     }

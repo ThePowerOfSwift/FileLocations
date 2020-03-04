@@ -97,15 +97,6 @@ extension Location: Equatable {
     public var isFinal: Bool {
         return self.isFile || (self.children().count == 0)
     }
-    
-    public static func ==(lhs: Location, rhs: Location) -> Bool {
-        return lhs.url == rhs.url
-    }
-    
-    public static func !=(lhs: Location, rhs: Location) -> Bool {
-        return !(lhs == rhs)
-    }
-    
 }
 
 

@@ -237,6 +237,14 @@ extension Location {
 
 //MARK: Hashable
 extension Location: Hashable {
+    public static func ==(lhs: Location, rhs: Location) -> Bool {
+        return lhs.url == rhs.url
+    }
+    
+    public static func !=(lhs: Location, rhs: Location) -> Bool {
+        return !(lhs == rhs)
+    }
+    
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.url.absoluteString)
     }
