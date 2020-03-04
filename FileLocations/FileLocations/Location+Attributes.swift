@@ -23,181 +23,193 @@
 //  THE SOFTWARE.
 //
 
-#if os(iOS) || os(tvOS)
+
+#if canImport(Foundation)
 import Foundation
 
 
 //MARK: Locations` File Attributes.
 extension Location {
-    //Set Location`s Attributes.
-    @discardableResult
-    public func setAttributes(_ attributes: [FileAttributeKey: Any]) -> Bool {
+    /// Set Location`s attributes.
+    public func setAttributes(_ attributes: [FileAttributeKey: Any])throws {
         do {
             try manager.setAttributes(attributes, ofItemAtPath: path)
-            return true
-        } catch { return false }
+        } catch let error {
+            throw LocationError.SetAttributesFail(message: error.localizedDescription)
+        }
     }
     
-    
-    //Set Location`s One Attribute.
-    @discardableResult
-    public func setAttribute(_ key: FileAttributeKey, value: Any) -> Bool {
-        let res = self.setAttributes([key: value])
-        if !res { NSLog("setAttribute \(key) fail!") }
-        return res
+    /// Set Location`s given attribute.
+    public func setAttribute(_ key: FileAttributeKey, value: Any)throws {
+        try self.setAttributes([key: value])
     }
     
-    
-    //Attributes Read.
+    /// Returns file attributes.
     public var attributes: [FileAttributeKey : Any] {
         return (try? manager.attributesOfItem(atPath: path)) ?? [:]
     }
     
-    
-    //Get the file’s type.
+    /// Returns file’s type.
     public var type: FileAttributeType? {
         return attributes[.type] as? FileAttributeType
     }
     
-    
-    //Get the file’s size in bytes.
+    /// Returns file’s size in bytes.
     public var byteSize: UInt64? {
         return attributes[.size] as? UInt64
     }
     
-    
-    //Get&Set the file's creation date.
+    /// Returns file's creation date.
     public var creationDate: Date? {
-        get { return attributes[.creationDate] as? Date }
-        set {
-            if let v = newValue { setAttribute(.creationDate, value: v) }
-        }
+        return attributes[.creationDate] as? Date
     }
     
+    /// Sets file's creation date.
+    public func setCreationDate(_ date: Date)throws {
+        try setAttribute(.creationDate, value: date)
+    }
     
-    //Get&Set the file’s last modified date.
+    /// Returns file’s last modified date.
     public var modificationDate: Date? {
-        get { return attributes[.modificationDate] as? Date }
-        set {
-            if let v = newValue { setAttribute(.modificationDate, value: v) }
-        }
+        return attributes[.modificationDate] as? Date
     }
     
+    /// Sets file's creation date.
+    public func setModificationDate(_ date: Date)throws {
+        try setAttribute(.modificationDate, value: date)
+    }
     
-    //Get the file’s reference count.
+    /// Retuturns file’s reference count.
     public var referenceCount: Int? {
         return attributes[.referenceCount] as? Int
     }
     
-    
-    //Get the identifier for the device on which the file resides.
+    /// Returns identifier for the device on which currents file resides.
     public var deviceIdentifier: Int64? {
         return attributes[.deviceIdentifier] as? Int64
     }
     
-    //Get&Set the name of the file’s owner.
-    public var ownerAccountName: String? {
-        get { return attributes[.ownerAccountName] as? String }
-        set {
-            if let v = newValue { setAttribute(.ownerAccountName, value: v) }
-        }
+    /// Returns the name of file owner.
+    public var ownerName: String? {
+        return attributes[.ownerAccountName] as? String
     }
     
-    
-    //Get&Set the file’s owner's account ID.
-    public var ownerAccountID: Int64? {
-        get { return attributes[.ownerAccountID] as? Int64 }
-        set {
-            if let v = newValue { setAttribute(.ownerAccountID, value: v) }
-        }
+    /// Setss the name of file owner.
+    public func setOwnerName(_ name: String)throws {
+        try setAttribute(.ownerAccountName, value: name)
     }
     
-    
-    //Get&Set the group name of the file’s owner.
-    public var groupOwnerAccountName: String? {
-        get { return attributes[.groupOwnerAccountName] as? String }
-        set {
-            if let v = newValue { setAttribute(.groupOwnerAccountName, value: v) }
-        }
+    /// Returns file owner's account ID.
+    public var ownerID: Int64? {
+        return attributes[.ownerAccountID] as? Int64
     }
     
-    
-    //Get&Set the file’s group ID.
-    public var groupOwnerAccountID: Int64? {
-        get { return attributes[.groupOwnerAccountID] as? Int64 }
-        set {
-            if let v = newValue { setAttribute(.groupOwnerAccountID, value: v) }
-        }
+    /// Sets file owner's account ID.
+    public func setOwnerID(_ id: Int64)throws {
+        try setAttribute(.ownerAccountID, value: id)
     }
     
+    /// Returns the group name of file owner.
+    public var groupOwnerName: String? {
+        return attributes[.groupOwnerAccountName] as? String
+    }
     
-    //Get&Set the file’s Posix permissions.
+    /// Sets file owner's account ID.
+    public func setGroupOwnerName(_ name: String)throws {
+        try setAttribute(.groupOwnerAccountName, value: name)
+    }
+    
+    /// Returns the file’s group ID.
+    public var groupOwnerID: Int64? {
+        return attributes[.groupOwnerAccountID] as? Int64
+    }
+    
+    /// Sets file owner's account ID.
+    public func setGroupOwnerID(_ id: Int64)throws {
+        try setAttribute(.groupOwnerAccountID, value: id)
+    }
+    
+    /// Returns file’s Posix permissions.
     public var posixPermissions: Int? {
-        get { return attributes[.posixPermissions] as? Int }
-        set {
-            if let v = newValue { setAttribute(.posixPermissions, value: v) }
-        }
+        return attributes[.posixPermissions] as? Int
     }
     
+    /// Sets file’s Posix permissions.
+    public func setPosixPermissions(_ permissions: Int)throws {
+        try setAttribute(.posixPermissions, value: permissions)
+    }
     
     //Get&Set whether the file’s extension is hidden.
     public var isExtensionHidden: Bool? {
-        get { return attributes[.extensionHidden] as? Bool }
-        set {
-            if let v = newValue { setAttribute(.extensionHidden, value: v) }
-        }
+        return attributes[.extensionHidden] as? Bool
     }
     
-    
-    //Get&Set the file’s HFS creator code.
-    public var hfsCreatorCode: Int64? {
-        get { return attributes[.hfsCreatorCode] as? Int64 }
-        set {
-            if let v = newValue { setAttribute(.hfsCreatorCode, value: v) }
-        }
+    /// Sets file’s Posix permissions.
+    public func setExtensionHidden(_ hidden: Bool)throws {
+        try setAttribute(.extensionHidden, value: hidden)
     }
     
-    
-    //Get&Set the file’s HFS type code.
-    public var hfsTypeCode: Int64? {
-        get { return attributes[.hfsTypeCode] as? Int64 }
-        set {
-            if let v = newValue { setAttribute(.hfsTypeCode, value: v) }
-        }
+    /// Returns file’s HFS creator code.
+    public var HFSCreatorCode: Int64? {
+        return attributes[.hfsCreatorCode] as? Int64
     }
     
+    /// Sets file’s HFS creator code.
+    public func setHFSCreatorCode(_ code: Int64)throws {
+        try setAttribute(.hfsCreatorCode, value: code)
+    }
     
-    //Get&Set Is Immutable Attribute.
+    /// Returns file’s HFS type code.
+    public var HFSTypeCode: Int64? {
+        return attributes[.hfsTypeCode] as? Int64
+    }
+    
+    /// Sets file’s HFS type code.
+    public func setHFSTypeCode(_ code: Int64)throws {
+        try setAttribute(.hfsTypeCode, value: code)
+    }
+    
+    /// Returns whether file is immutable.
     public var isImmutable: Bool? {
-        get { return attributes[.immutable] as? Bool }
-        set {
-            if let v = newValue { setAttribute(.immutable, value: v) }
-        }
+        return attributes[.immutable] as? Bool
     }
     
+    /// Sets whether file is immutable.
+    public func setImmutable(_ immutable: Bool)throws {
+        try setAttribute(.immutable, value: immutable)
+    }
     
-    //Get whether the file is read-only.
+    /// Returns whether file is read-only.
     public var isAppendOnly: Bool? {
-        get { return attributes[.appendOnly] as? Bool }
-        set { setAttribute(.appendOnly, value: newValue ?? false) }
+        return attributes[.appendOnly] as? Bool
     }
     
+    /// Sets whether file is read-only.
+    public func setAppendOnly(_ appendOnly: Bool)throws {
+        try setAttribute(.appendOnly, value: appendOnly)
+    }
     
-    //Get whether the file is busy.
+    /// Returns whether file is busy.
     public var isBusy: Bool? {
-        get { return attributes[.busy] as? Bool }
-        set { setAttribute(.busy, value: newValue ?? false) }
+        return attributes[.busy] as? Bool
     }
     
+    /// Sets whether file is busy.
+    public func setBusy(_ busy: Bool)throws {
+        try setAttribute(.busy, value: busy)
+    }
     
-    //Get the protection level for this file.
+    /// Returns the protection level of file.
     public var protectionKey: FileProtectionType? {
-        get { return attributes[.protectionKey] as? FileProtectionType }
-        set { setAttribute(.protectionKey, value: newValue ?? FileProtectionType.completeUntilFirstUserAuthentication)}
+        return attributes[.protectionKey] as? FileProtectionType
     }
     
+    /// Sets the protection level of file.
+    public func setProtectionKey(_ key: FileProtectionType)throws {
+        try setAttribute(.protectionKey, value: key)
+    }
     
-    //Get the file`s filesystem file number of File System. The corresponding value is an NSNumber object containing an unsigned long. The value corresponds to the value of st_ino, as returned by stat(2).
+    /// Returns file`s file number in FilesSystem. The corresponding value is an NSNumber object containing an unsigned long. The value corresponds to the value of st_ino, as returned by stat(2).
     public var systemFileNumber: Int64? {
         return attributes[.systemFileNumber] as? Int64
     }
@@ -205,38 +217,35 @@ extension Location {
 
 //MARK: Locations` FileSystem Attributes.
 extension Location {
-    //Attributes Read.
+    /// Returns attributes of FilesSystem.
     public static var attributesOfFilsSystem: [FileAttributeKey : Any] {
-        let loc = Location.home
-        return (try? manager.attributesOfFileSystem(forPath: loc.path)) ?? [:]
+        return (try? manager.attributesOfFileSystem(forPath: Location.home.path)) ?? [:]
     }
     
     
-    //Get Size of File System.
+    /// Returns size of FilesSystem.
     public static var systemBytesSize: UInt64? {
         return attributesOfFilsSystem[.systemSize] as? UInt64
     }
     
     
-    //Get Free Size of File System.
+    /// Returns Free Size of FilesSystem.
     public static var systemFreeBytesSize: UInt64? {
         return attributesOfFilsSystem[.systemFreeSize] as? UInt64
     }
     
     
-    //Get the Number of Nodes in File System.
+    /// Returns number of Nodes in FilesSystem.
     public static var systemNodes: UInt64? {
         return attributesOfFilsSystem[.systemNodes] as? UInt64
     }
     
-    
-    //Get the Number of Free Nodes in File System.
+    /// Returns number of free nodes in FilesSystem.
     public static var systemFreeNodes: UInt64? {
         return attributesOfFilsSystem[.systemFreeNodes] as? UInt64
     }
     
-    
-    //Get the filesystem number of File System. The value corresponds to the value of st_dev, as returned by stat(2).
+    /// Returns the filesystem number of File System. The value corresponds to the value of st_dev, as returned by stat(2).
     public static var systemNumber: UInt64? {
         return attributesOfFilsSystem[.systemNumber] as? UInt64
     }

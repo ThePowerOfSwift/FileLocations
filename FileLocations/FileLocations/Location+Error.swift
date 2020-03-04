@@ -1,5 +1,5 @@
 //
-//  Location+Constants.swift
+//  Location+Error.swift
 //  FileLocations
 //
 //  Copyright (c) 2019 Nick Meepo. All rights reserved.
@@ -26,33 +26,37 @@
 #if canImport(Foundation)
 import Foundation
 
-
-//MARK: Constant Locations.
-public extension Location {
-    static let root =
-        Location(filePath: .pathSep)
+public enum LocationError: Error {
+    case NameEmptyError
     
-    static let userDocument =
-        Location(directory: .documentDirectory, domain: .userDomainMask)
+    case SetAttributesFail(message: String?)
     
-    static let userCache =
-        Location(directory: .cachesDirectory, domain: .userDomainMask)
+    case CreateDirectoryFail(message: String?)
     
-    static let userLibrary =
-        Location(directory: .libraryDirectory, domain: .userDomainMask)
+    case CreateFileFail(message: String?)
     
-    static let applicationSupport =
-        Location(directory: .applicationSupportDirectory, domain: .userDomainMask)
+    case CopyItemFail(message: String?)
     
-    static let bundle =
-        Location(filePath: Bundle.main.bundlePath)
+    case MoveItemFail(message: String?)
     
-    static let home =
-        Location(filePath: NSHomeDirectory())
+    case RenameItemFail(message: String?)
     
-    static let temporary =
-        Location(filePath: NSTemporaryDirectory())
+    case RemoveItemFail(message: String?)
     
+    case LinkItemFail(message: String?)
+    
+    case SymbolicLinkItemFail(message: String?)
+    
+    case ReplaceItemFail(message: String?)
+    
+    @available(iOS 11, *)
+    case TrashItemFail(message: String?)
+    
+    case NeedDirectoryItem
+    
+    case NeedFileItem
+    
+    case NeedParentItem
 }
 
 #endif

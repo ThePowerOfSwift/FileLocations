@@ -24,27 +24,31 @@
 //
 
 #if canImport(MobileCoreServices)
+#if canImport(Foundation)
 import MobileCoreServices
 import Foundation
 
 
 
 extension Location {
-    //Request the UTI via the file extension
-    public func uti() -> String {
-        guard self.isFile && !self.extension.isEmpty else { return "" }
+    /// Request the UTI via the file extension
+    public func uti() -> String? {
+        guard !self.extension.isEmpty else { return nil }
         let ext = NSString(string: self.extension) as CFString
-        guard let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, ext, nil) else { return "" }
+        guard let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, ext, nil) else { return nil }
         return String(uti.takeUnretainedValue())
     }
     
-    //Request the Mime via the file extension
-    public func mime() -> String {
-        let utiStr = NSString(string: self.uti()) as CFString
-        guard let res = UTTypeCopyPreferredTagWithClass(utiStr, kUTTagClassMIMEType) else { return "" }
+    /// Request the Mime via the file extension
+    public func mime() -> String? {
+        guard let uti = self.uti() else { return nil }
+        let utiStr = NSString(string: uti) as CFString
+        guard let res = UTTypeCopyPreferredTagWithClass(utiStr, kUTTagClassMIMEType) else { return nil }
         return String(res.takeUnretainedValue() as NSString)
     }
 }
 
+
+#endif
 
 #endif
